@@ -23,6 +23,8 @@ make format        # ruff format + djlint templates + prettier JS/CSS
 make e2e           # builds static assets, then runs Playwright tests
 ```
 
+**`make init && make serve` alone produces a half-broken UI.** `make init` does not build the frontend — `bookmarks/static/bundle.js` and `theme-{light,dark}.css` are missing until you either run `make frontend` (Rollup watcher; JS only) or `npm run build` (one-shot: JS + both theme CSS files). Without the bundle, Lit-based custom elements like `<ld-modal>` render but their event handlers never bind, so things like the bookmark details modal's close button silently do nothing. Run `npm run build` once after `make init`, or run `make frontend` in a second terminal during development.
+
 Run a single test or subset:
 
 ```shell
